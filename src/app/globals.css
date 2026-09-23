@@ -11,7 +11,106 @@ body {
 
 body {
   margin: 0;
-  background: #f8fafc;
+  background: #f4f7fc;
   color: #0f172a;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(45, 103, 223, 0.18);
+}
+
+/* Shared auth-page motion and responsive polish. */
+.auth-orb-one {
+  animation: auth-orb-one 12s ease-in-out infinite;
+}
+.auth-orb-two {
+  animation: auth-orb-two 14s ease-in-out infinite;
+}
+.auth-spin {
+  animation: auth-spin 18s linear infinite;
+}
+.auth-logo-bob {
+  animation: auth-logo-bob 4s ease-in-out infinite;
+}
+.animate-fade-up {
+  animation: auth-fade-up 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes auth-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes auth-logo-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(1deg);
+  }
+}
+
+@keyframes auth-orb-one {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(24px, 18px, 0) scale(1.08);
+  }
+}
+
+@keyframes auth-orb-two {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-28px, -16px, 0) scale(1.06);
+  }
+}
+
+@keyframes auth-spin {
+  from {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  to {
+    transform: translateX(-50%) rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .auth-page-grid {
+    min-height: 100svh;
+  }
 }
