@@ -7,7 +7,7 @@ const __dirname = dirname(__filename);
 
 const compat = new FlatCompat({ baseDirectory: __dirname });
 
-export default [
+const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     ignores: [
@@ -16,6 +16,9 @@ export default [
       "coverage/**",
       "dist/**",
       "public/uploads/**",
+      "next-env.d.ts",
     ],
   },
 ];
+
+export default eslintConfig;

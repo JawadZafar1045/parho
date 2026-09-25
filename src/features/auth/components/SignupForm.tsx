@@ -243,6 +243,8 @@ export default function SignupForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [showPaymentGuide, setShowPaymentGuide] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function updateField<K extends keyof SignupFormValues>(field: K, value: SignupFormValues[K]) {
     setValues((current) => ({ ...current, [field]: value }));
@@ -250,8 +252,9 @@ export default function SignupForm() {
     setSuccess(false);
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (isSubmitting) return;
 
     const result = signupSchema.safeParse(values);
 
@@ -266,7 +269,38 @@ export default function SignupForm() {
     }
 
     setErrors({});
-    setSuccess(true);
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(result.data),
+      });
+
+      const payload = (await response.json()) as {
+        success?: boolean;
+        message?: string;
+        error?: { message?: string } | string;
+      };
+
+      if (!response.ok || !payload.success) {
+        const message =
+          typeof payload.error === "string"
+            ? payload.error
+            : payload.error?.message || payload.message || "Registration failed.";
+        throw new Error(message);
+      }
+
+      setValues(initialValues);
+      setSuccess(true);
+    } catch (error) {
+      setErrors({
+        transactionId: error instanceof Error ? error.message : "Registration failed. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -372,6 +406,91 @@ export default function SignupForm() {
               </p>
             </div>
 
+            {showPaymentGuide && (
+              <div
+                className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/45 p-4 backdrop-blur-sm"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="payment-guide-title"
+                onMouseDown={(event) => {
+                  if (event.target === event.currentTarget) setShowPaymentGuide(false);
+                }}
+              >
+                <div className="max-h-[88svh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-slate-200 bg-white p-5 shadow-2xl animate-fade-up sm:p-7">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#2D67DF]">
+                        Payment Guide
+                      </p>
+                      <h3 id="payment-guide-title" className="mt-1 text-2xl font-extrabold text-slate-950">
+                        How to Pay
+                      </h3>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setShowPaymentGuide(false)}
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-500 transition hover:bg-slate-200 hover:text-slate-800 focus:outline-none focus:ring-4 focus:ring-blue-100"
+                      aria-label="Close payment guide"
+                    >
+                      <span className="text-xl leading-none" aria-hidden="true">×</span>
+                    </button>
+                  </div>
+
+                  <div className="mt-5 grid gap-4 md:grid-cols-2">
+                    <div className="rounded-2xl border border-blue-100 bg-blue-50/70 p-4 sm:p-5">
+                      <p className="text-sm font-extrabold text-slate-950">English</p>
+                      <ol className="mt-3 space-y-2.5 text-sm leading-6 text-slate-600">
+                        <li><span className="font-bold text-slate-800">1.</span> Select the course you want to purchase.</li>
+                        <li><span className="font-bold text-slate-800">2.</span> Pay the course fee through JazzCash.</li>
+                      </ol>
+                      <div className="mt-3 rounded-xl border border-white bg-white p-3">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-slate-400">JazzCash</p>
+                        <p className="mt-1 text-base font-extrabold tracking-wide text-slate-900">0328 7267519</p>
+                        <p className="text-base font-extrabold tracking-wide text-slate-900">0307 8557982</p>
+                      </div>
+                      <ol start={3} className="mt-3 space-y-2.5 text-sm leading-6 text-slate-600">
+                        <li><span className="font-bold text-slate-800">3.</span> Keep your transaction ID after payment.</li>
+                        <li><span className="font-bold text-slate-800">4.</span> Send the payment receipt/screenshot on WhatsApp to the same number you used for the payment.</li>
+                        <li><span className="font-bold text-slate-800">5.</span> Enter the transaction ID on the signup form and submit it.</li>
+                        <li><span className="font-bold text-slate-800">6.</span> We will verify your payment. After confirmation, your account will be approved for the course you selected.</li>
+                      </ol>
+                    </div>
+
+                    <div dir="rtl" className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-right sm:p-5">
+                      <p className="text-sm font-extrabold text-slate-950">اردو</p>
+                      <ol className="mt-3 space-y-2.5 text-sm leading-7 text-slate-600">
+                        <li><span className="font-bold text-slate-800">1۔</span> جس کورس کی تیاری کرنی ہے وہ منتخب کریں۔</li>
+                        <li><span className="font-bold text-slate-800">2۔</span> JazzCash کے ذریعے کورس کی فیس ادا کریں۔</li>
+                      </ol>
+                      <div dir="ltr" className="mt-3 rounded-xl border border-white bg-white p-3 text-left">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-slate-400">JazzCash</p>
+                        <p className="mt-1 text-base font-extrabold tracking-wide text-slate-900">0328 7267519</p>
+                        <p className="text-base font-extrabold tracking-wide text-slate-900">0307 8557982</p>
+                      </div>
+                      <ol start={3} className="mt-3 space-y-2.5 text-sm leading-7 text-slate-600">
+                        <li><span className="font-bold text-slate-800">3۔</span> ادائیگی کے بعد Transaction ID محفوظ رکھیں۔</li>
+                        <li><span className="font-bold text-slate-800">4۔</span> جس نمبر پر ادائیگی کی ہے، اسی نمبر پر WhatsApp کے ذریعے رسید یا اسکرین شاٹ بھیجیں۔</li>
+                        <li><span className="font-bold text-slate-800">5۔</span> Signup فارم میں Transaction ID درج کرکے فارم جمع کریں۔</li>
+                        <li><span className="font-bold text-slate-800">6۔</span> ہماری ٹیم آپ کی ادائیگی کی تصدیق کرے گی۔ تصدیق کے بعد منتخب کورس کے لیے آپ کا اکاؤنٹ منظور کر دیا جائے گا اور آپ لاگ اِن کر سکیں گے۔</li>
+                      </ol>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 rounded-2xl border border-amber-100 bg-amber-50 px-4 py-3 text-xs leading-5 text-amber-800">
+                    <span className="font-bold">Important:</span> Do not send payment before checking the course you have selected. Keep the transaction ID and payment receipt until your registration is confirmed.
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setShowPaymentGuide(false)}
+                    className="mt-5 flex h-11 w-full items-center justify-center rounded-xl bg-[#2D67DF] text-sm font-bold text-white shadow-lg shadow-blue-200 transition hover:-translate-y-px hover:bg-[#2358C7] focus:outline-none focus:ring-4 focus:ring-blue-100"
+                  >
+                    I Understand
+                  </button>
+                </div>
+              </div>
+            )}
+
             {success && (
               <div
                 className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 p-4 backdrop-blur-sm"
@@ -395,8 +514,7 @@ export default function SignupForm() {
                     After the payment is confirmed, your access can be activated.
                   </p>
                   <div className="mt-5 rounded-2xl bg-slate-50 p-4 text-xs leading-5 text-slate-500">
-                    This frontend currently shows the confirmation state only. We will connect it to
-                    the registration API and payment-verification workflow next.
+                    Your registration has been submitted successfully and is pending payment verification.
                   </div>
                   <button
                     type="button"
@@ -591,17 +709,25 @@ export default function SignupForm() {
               </div>
 
               <div className="rounded-2xl border border-blue-100 bg-blue-50/70 p-4 sm:p-5">
-                <div className="flex items-start gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-[#2D67DF] shadow-sm">
-                    <ReceiptIcon />
-                  </span>
-                  <div>
-                    <p className="text-sm font-bold text-slate-900">Payment verification</p>
-                    <p className="mt-1 text-xs leading-5 text-slate-500">
-                      Complete the payment using Parho’s payment instructions, then enter the exact
-                      transaction ID below. Access will be activated after verification.
-                    </p>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-start gap-3">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-[#2D67DF] shadow-sm">
+                      <ReceiptIcon />
+                    </span>
+                    <div>
+                      <p className="text-sm font-bold text-slate-900">Payment details</p>
+                      <p className="mt-1 text-xs leading-5 text-slate-500">
+                        Pay by JazzCash, send your receipt on WhatsApp, then enter the transaction ID.
+                      </p>
+                    </div>
                   </div>
+                  <button
+                    type="button"
+                    onClick={() => setShowPaymentGuide(true)}
+                    className="inline-flex h-10 shrink-0 items-center justify-center rounded-xl border border-blue-200 bg-white px-4 text-xs font-bold text-[#2D67DF] shadow-sm transition hover:-translate-y-px hover:border-blue-300 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-blue-100"
+                  >
+                    How to Pay
+                  </button>
                 </div>
 
                 <div className="mt-4">

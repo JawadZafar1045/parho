@@ -9,16 +9,33 @@ body {
   min-height: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   background: #f4f7fc;
   color: #0f172a;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
 }
 
 * {
   box-sizing: border-box;
 }
+
+.book {
+  box-shadow: 12px 10px 0 rgba(32, 55, 84, 0.16), 0 12px 20px rgba(41, 80, 126, 0.15);
+  transform: skewX(-6deg);
+  padding-top: 15px;
+}
+.book-blue { background: #1e5fae; }
+.book-green { background: #259394; }
+.book-yellow { background: #e4a927; }
+.book-navy { background: #2256a0; }
+.book-black { background: #293646; }
+.study-scene { filter: drop-shadow(0 24px 24px rgba(80, 125, 177, 0.08)); }
+.notebook { background-image: repeating-linear-gradient(#fff 0 15px, #dcecff 16px); }
 
 button,
 input,

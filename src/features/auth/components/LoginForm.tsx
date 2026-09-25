@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState, type FormEvent, type ReactNode } from "react";
 import { loginSchema, type LoginFormValues } from "@/features/auth/validations/login";
 import AuthBrandPanel from "./AuthBrandPanel";
-import { ArrowIcon, EyeIcon, GoogleIcon, LockIcon, MailIcon } from "./AuthIcons";
+import { ArrowIcon, EyeIcon, LockIcon, MailIcon } from "./AuthIcons";
 
 const examTracks = ["PPSC", "FPSC", "PMS", "CSS", "NTS"];
 
@@ -34,11 +35,12 @@ function inputClass(error: boolean) {
 }
 
 export default function LoginForm() {
+  const router = useRouter();
   const [values, setValues] = useState<LoginFormValues>(initialValues);
   const [errors, setErrors] = useState<FormErrors>({});
   const [showPassword, setShowPassword] = useState(false);
-  const [socialMessage, setSocialMessage] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function updateField<K extends keyof LoginFormValues>(field: K, value: LoginFormValues[K]) {
     setValues((current) => ({ ...current, [field]: value }));
@@ -46,8 +48,10 @@ export default function LoginForm() {
     setSubmitted(false);
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (isSubmitting) return;
+
     const result = loginSchema.safeParse(values);
 
     if (!result.success) {
@@ -62,7 +66,39 @@ export default function LoginForm() {
     }
 
     setErrors({});
-    setSubmitted(true);
+    setSubmitted(false);
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(result.data),
+      });
+
+      const payload = (await response.json()) as {
+        success?: boolean;
+        message?: string;
+        error?: { message?: string } | string;
+      };
+
+      if (!response.ok || !payload.success) {
+        const message =
+          typeof payload.error === "string"
+            ? payload.error
+            : payload.error?.message || payload.message || "Login failed.";
+        throw new Error(message);
+      }
+
+      router.push("/student/dashboard");
+      router.refresh();
+    } catch (error) {
+      setErrors({
+        password: error instanceof Error ? error.message : "Login failed. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -131,30 +167,6 @@ export default function LoginForm() {
                     {track}
                   </span>
                 ))}
-              </div>
-
-              {socialMessage && (
-                <div
-                  className="mt-5 rounded-xl border border-blue-100 bg-blue-50 px-3.5 py-3 text-xs leading-5 text-blue-800"
-                  role="status"
-                >
-                  Google sign-in will be connected when the authentication backend is enabled.
-                </div>
-              )}
-
-              <button
-                type="button"
-                onClick={() => setSocialMessage(true)}
-                className="mt-6 flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm transition duration-200 hover:-translate-y-px hover:border-slate-300 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-blue-100 active:translate-y-0"
-              >
-                <GoogleIcon className="h-5 w-5" />
-                Continue with Google
-              </button>
-
-              <div className="my-6 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400">
-                <span className="h-px flex-1 bg-slate-100" />
-                or continue with email
-                <span className="h-px flex-1 bg-slate-100" />
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5" noValidate>
@@ -236,7 +248,7 @@ export default function LoginForm() {
                     className="rounded-xl border border-blue-100 bg-blue-50 px-3.5 py-3 text-xs leading-5 text-blue-800"
                     role="status"
                   >
-                    Login form is ready. Authentication API integration will be connected next.
+                    Login successful. Redirecting to your student dashboard.
                   </div>
                 )}
 

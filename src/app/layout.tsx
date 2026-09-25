@@ -4,17 +4,17 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Parho | Exam Preparation Platform",
-  description:
-    "Parho provides paid preparation resources, notes and quizzes for competitive tests.",
+  description: "Parho provides paid preparation resources, notes and quizzes for competitive tests.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: ReactNode;
-}>) {
+}: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body>{children}</body>
     </html>
   );
