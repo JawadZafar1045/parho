@@ -45,6 +45,7 @@ export function StudentDashboardPage() {
                 </h2>
                 <Link
                   href="/student/courses"
+                  prefetch={false}
                   className="inline-flex items-center gap-2 text-[15px] font-semibold text-[#2563EB] transition-colors hover:text-[#1F51C9]"
                 >
                   View All Courses
@@ -84,6 +85,7 @@ export function StudentDashboardPage() {
                     <div className="mt-5 grid gap-3 sm:grid-cols-2">
                       <Link
                         href={course.notesRoute ?? "/student/notes"}
+                        prefetch={false}
                         className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl border border-[#B9D6FF] bg-[#F1F6FF] px-4 text-[15px] font-semibold text-[#2563EB] transition-colors hover:bg-[#E1ECFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                       >
                         <FileIcon className="h-5 w-5" />
@@ -92,6 +94,7 @@ export function StudentDashboardPage() {
 
                       <Link
                         href={course.quizRoute ?? "/student/quizzes"}
+                        prefetch={false}
                         className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-[#2563EB] px-4 text-[15px] font-semibold text-white shadow-[0_10px_18px_rgba(37,99,235,0.16)] transition-colors hover:bg-[#1D59D8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                       >
                         <PencilIcon className="h-5 w-5" />
@@ -110,6 +113,7 @@ export function StudentDashboardPage() {
                 </h2>
                 <Link
                   href="/student/results"
+                  prefetch={false}
                   className="inline-flex items-center gap-2 text-[15px] font-semibold text-[#2563EB] transition-colors hover:text-[#1F51C9]"
                 >
                   View All Results

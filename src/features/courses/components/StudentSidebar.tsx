@@ -27,12 +27,12 @@ function NavItems({ onNavigate }: { onNavigate?: () => void }) {
         {primaryItems.map((item) => {
           const Icon = item.icon;
           const active = pathname === item.href;
-          return <Link key={item.label} href={item.href} onClick={onNavigate} className={`flex min-h-11 items-center gap-3 rounded-xl px-4 text-[15px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${active ? "bg-[#E1EEFF] text-[#2563EB]" : "text-[#51627F] hover:bg-[#F1F6FD] hover:text-[#2563EB]"}`} aria-current={active ? "page" : undefined}><Icon className="h-5 w-5 shrink-0" /><span>{item.label}</span></Link>;
+          return <Link key={item.label} href={item.href} prefetch={false} onClick={onNavigate} className={`flex min-h-11 items-center gap-3 rounded-xl px-4 text-[15px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${active ? "bg-[#E1EEFF] text-[#2563EB]" : "text-[#51627F] hover:bg-[#F1F6FD] hover:text-[#2563EB]"}`} aria-current={active ? "page" : undefined}><Icon className="h-5 w-5 shrink-0" /><span>{item.label}</span></Link>;
         })}
       </div>
       <div className="my-6 border-t border-[#E6EDF6]" />
       <div className="space-y-1.5">
-        {secondaryItems.map((item) => { const Icon = item.icon; const active = pathname === item.href; return <Link key={item.label} href={item.href} onClick={onNavigate} className={`flex min-h-11 items-center gap-3 rounded-xl px-4 text-[15px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${active ? "bg-[#E1EEFF] text-[#2563EB]" : "text-[#51627F] hover:bg-[#F1F6FD] hover:text-[#2563EB]"}`} aria-current={active ? "page" : undefined}><Icon className="h-5 w-5 shrink-0" /><span>{item.label}</span></Link>; })}
+        {secondaryItems.map((item) => { const Icon = item.icon; const active = pathname === item.href; return <Link key={item.label} href={item.href} prefetch={false} onClick={onNavigate} className={`flex min-h-11 items-center gap-3 rounded-xl px-4 text-[15px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${active ? "bg-[#E1EEFF] text-[#2563EB]" : "text-[#51627F] hover:bg-[#F1F6FD] hover:text-[#2563EB]"}`} aria-current={active ? "page" : undefined}><Icon className="h-5 w-5 shrink-0" /><span>{item.label}</span></Link>; })}
       </div>
     </nav>
   );

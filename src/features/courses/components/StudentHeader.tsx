@@ -24,7 +24,7 @@ export function StudentHeader({ onMenuOpen }: StudentHeaderProps) {
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1677E8] text-sm font-bold text-white">AS</div>
         <div className="hidden sm:block"><p className="text-sm font-bold leading-5 text-[#18264A]">Abdul Saboor</p><p className="text-xs font-medium text-[#70809B]">Student</p></div>
         <button type="button" onClick={() => setIsAccountOpen((open) => !open)} className="rounded-lg p-1 text-[#536684] hover:bg-[#F1F6FD] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" aria-label="Open account menu" aria-expanded={isAccountOpen}><ChevronDownIcon /></button>
-        {isAccountOpen && <div className="absolute right-0 top-12 z-20 w-44 rounded-xl border border-[#DCE6F2] bg-white p-2 shadow-[0_12px_30px_rgba(46,93,145,0.14)]"><Link href="/student/profile" className="block rounded-lg px-3 py-2.5 text-sm font-semibold text-[#51627F] hover:bg-[#F1F6FD]">Profile</Link><button type="button" onClick={handleLogout} className="w-full rounded-lg px-3 py-2.5 text-left text-sm font-semibold text-[#D04B59] hover:bg-[#FFF1F2]">Logout</button></div>}
+        {isAccountOpen && <div className="absolute right-0 top-12 z-20 w-44 rounded-xl border border-[#DCE6F2] bg-white p-2 shadow-[0_12px_30px_rgba(46,93,145,0.14)]"><Link href="/student/profile" prefetch={false} className="block rounded-lg px-3 py-2.5 text-sm font-semibold text-[#51627F] hover:bg-[#F1F6FD]">Profile</Link><button type="button" onClick={handleLogout} className="w-full rounded-lg px-3 py-2.5 text-left text-sm font-semibold text-[#D04B59] hover:bg-[#FFF1F2]">Logout</button></div>}
       </div>
     </div>
   </header>;
