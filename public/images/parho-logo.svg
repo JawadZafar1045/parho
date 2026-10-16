@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 550" width="100%" height="100%">
+  <defs>
+    <!-- Gradients to replicate the modern, subtle 3D lighting of the original image -->
+    <linearGradient id="capGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3179ba" />
+      <stop offset="100%" stop-color="#194f86" />
+    </linearGradient>
+    
+    <linearGradient id="shieldLeftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82c4" />
+      <stop offset="100%" stop-color="#123d6b" />
+    </linearGradient>
+
+    <linearGradient id="shieldRightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#8a99a8" />
+    </linearGradient>
+
+    <linearGradient id="wingGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2d77ba" />
+      <stop offset="100%" stop-color="#10365c" />
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(0, 10)">
+    <!-- Outer Bottom Curve (Laurel / Wing) -->
+    <path d="M 80 260 C 130 400 250 440 250 440 C 250 440 370 400 420 260 C 375 375 250 405 250 405 C 250 405 125 375 80 260 Z" fill="url(#wingGrad)" />
+
+    <!-- Inner Bottom Curve (Laurel / Wing) -->
+    <path d="M 120 215 C 160 325 250 370 250 370 C 250 370 340 325 380 215 C 340 310 250 335 250 335 C 250 335 160 310 120 215 Z" fill="url(#wingGrad)" />
+
+    <!-- Shield / Book Outer White Border -->
+    <!-- The white outline framing the central core -->
+    <path d="M 140 160 Q 195 190 250 185 Q 305 190 360 160 C 360 275 285 340 250 360 C 215 340 140 275 140 160 Z" fill="#ffffff" />
+
+    <!-- Shield Inner Left Side (Blue Page) -->
+    <path d="M 152 175 Q 205 200 247 195 L 247 348 C 220 330 152 270 152 175 Z" fill="url(#shieldLeftGrad)" />
+
+    <!-- Shield Inner Right Side (Silver Page) -->
+    <path d="M 348 175 Q 295 200 253 195 L 253 348 C 280 330 348 270 348 175 Z" fill="url(#shieldRightGrad)" />
+
+    <!-- Graduation Cap Base (Dark Blue Cylinder) -->
+    <!-- Overlaps the top of the shield slightly for a seamless connection -->
+    <polygon points="175,110 325,110 325,175 250,205 175,175" fill="#0d2c4f" />
+
+    <!-- Graduation Cap Top (Diamond) -->
+    <polygon points="250,45 385,85 250,130 115,85" fill="url(#capGrad)" />
+
+    <!-- Tassel Drop Line -->
+    <line x1="340" y1="75" x2="340" y2="135" stroke="#0d2c4f" stroke-width="4.5" />
+    
+    <!-- Tassel Knot -->
+    <rect x="336" y="125" width="8" height="10" fill="#0d2c4f" rx="2" />
+    
+    <!-- Tassel Fringe -->
+    <polygon points="336,135 344,135 349,155 331,155" fill="#0d2c4f" />
+
+    <!-- Wordmark -->
+    <text x="250" y="515" font-family="'Montserrat', system-ui, -apple-system, sans-serif" font-size="72" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="2">Parho</text>
+  </g>
+</svg>
