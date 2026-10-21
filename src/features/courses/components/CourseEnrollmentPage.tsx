@@ -60,7 +60,7 @@ export function CourseEnrollmentPage({
               className="inline-flex min-h-9 items-center gap-2 rounded-lg px-2 text-sm font-semibold text-[#445675] hover:bg-white hover:text-[#1478F2]"
             >
               <span aria-hidden="true">←</span>
-              Available Courses
+              Back
             </Link>
             <section className="mt-5 rounded-2xl border border-[#DDE8F5] bg-white p-5 shadow-[0_5px_16px_rgba(46,93,145,0.035)] sm:p-7">
               <div className="flex flex-wrap items-start justify-between gap-4">

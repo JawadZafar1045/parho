@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getPublishedCourse, hasVerifiedCourseEnrollment } from "@/features/courses/server-data";
 import { ManageCoursePage } from "@/features/courses/components/ManageCoursePage";
 import { getSessionUser, SESSION_COOKIE_NAME } from "@/lib/auth/store";
@@ -10,11 +10,13 @@ export default async function CourseRoute({ params }: CourseRouteProps) {
   const { courseId } = await params;
   const token = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
   const user = getSessionUser(token);
-  if (!user || !(await hasVerifiedCourseEnrollment(user.id, courseId))) notFound();
+  if (!user) redirect("/login");
 
   const record = await getPublishedCourse(courseId);
-
   if (!record) notFound();
+  if (!(await hasVerifiedCourseEnrollment(user.id, courseId))) {
+    redirect(`/student/course-catalog/${record.id}`);
+  }
 
   const course = {
     ...record,
