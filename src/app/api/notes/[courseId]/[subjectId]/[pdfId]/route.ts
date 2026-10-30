@@ -1,9 +1,12 @@
+import fs from "node:fs";
+import path from "node:path";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { getSessionUser, SESSION_COOKIE_NAME } from "@/lib/auth/store";
-function createPdf(title: string) {
+
+function createFallbackPdf(title: string) {
   const safeTitle = title.replace(/[()\\]/g, "\\$&");
-  const stream = `BT\n/F1 22 Tf\n72 700 Td\n(${safeTitle}) Tj\n/F1 12 Tf\n0 -32 Td\n(Parho study material) Tj\nET`;
+  const stream = `BT\n/F1 22 Tf\n72 700 Td\n(${safeTitle}) Tj\n/F1 12 Tf\n0 -32 Td\n(Parho study material - Drop your local PDF in storage/notes to replace) Tj\nET`;
   const objects = [
     "<< /Type /Catalog /Pages 2 0 R >>",
     "<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
@@ -13,19 +16,98 @@ function createPdf(title: string) {
   ];
   let pdf = "%PDF-1.4\n";
   const offsets = [0];
-  for (const [index, object] of objects.entries()) { offsets.push(pdf.length); pdf += `${index + 1} 0 obj\n${object}\nendobj\n`; }
+  for (const [index, object] of objects.entries()) {
+    offsets.push(pdf.length);
+    pdf += `${index + 1} 0 obj\n${object}\nendobj\n`;
+  }
   const xref = pdf.length;
-  pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n${offsets.slice(1).map((offset) => `${String(offset).padStart(10, "0")} 00000 n `).join("\n")}\ntrailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
+  pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n${offsets
+    .slice(1)
+    .map((offset) => `${String(offset).padStart(10, "0")} 00000 n `)
+    .join("\n")}\ntrailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
   return new TextEncoder().encode(pdf);
 }
 
-export async function GET(_request: Request, { params }: { params: Promise<{ pdfId: string }> }) {
+export async function GET(
+  _request: Request,
+  {
+    params,
+  }: {
+    params: Promise<{
+      courseId: string;
+      subjectId: string;
+      pdfId: string;
+    }>;
+  }
+) {
   const token = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
-  if (!getSessionUser(token)) {
-    return NextResponse.json({ success: false, message: "Authentication required." }, { status: 401 });
+  const user = getSessionUser(token);
+
+  if (!user) {
+    return NextResponse.json(
+      { success: false, message: "Authentication required." },
+      { status: 401 }
+    );
   }
 
-  const { pdfId } = await params;
+  const { courseId, subjectId, pdfId } = await params;
+
+  // 1. Check if material has an external Cloudflare R2 / S3 / CDN URL
+  try {
+    const { getMaterialById } = await import("@/services/materialStore");
+    const material = getMaterialById(courseId, subjectId, pdfId);
+    if (material?.r2Url) {
+      const r2Res = await fetch(material.r2Url);
+      if (r2Res.ok) {
+        const arrayBuffer = await r2Res.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+        return new Response(buffer, {
+          headers: {
+            "Content-Type": "application/pdf",
+            "Content-Disposition": `inline; filename="${pdfId}.pdf"`,
+            "Content-Length": buffer.length.toString(),
+            "Cache-Control": "private, max-age=3600",
+          },
+        });
+      }
+    }
+  } catch (r2Err) {
+    console.warn("Could not stream remote R2 PDF, checking local filesystem:", r2Err);
+  }
+
+  // 2. Check local file storage paths
+  const baseStorage = path.join(process.cwd(), "storage", "notes");
+  const candidatePaths = [
+    path.join(baseStorage, courseId, subjectId, `${pdfId}.pdf`),
+    path.join(baseStorage, courseId, `${pdfId}.pdf`),
+    path.join(baseStorage, `${pdfId}.pdf`),
+  ];
+
+  for (const localPath of candidatePaths) {
+    if (fs.existsSync(localPath)) {
+      try {
+        const fileBuffer = await fs.promises.readFile(localPath);
+        return new Response(fileBuffer, {
+          headers: {
+            "Content-Type": "application/pdf",
+            "Content-Disposition": `inline; filename="${pdfId}.pdf"`,
+            "Content-Length": fileBuffer.length.toString(),
+            "Cache-Control": "private, max-age=3600",
+          },
+        });
+      } catch (err) {
+        console.error("Error reading local PDF file:", err);
+      }
+    }
+  }
+
+  // 2. Fallback dynamic PDF generation
   const title = pdfId.replace(/-\d+$/, "").replace(/-/g, " ");
-  return new Response(createPdf(title), { headers: { "Content-Type": "application/pdf", "Content-Disposition": `inline; filename="${pdfId}.pdf"` } });
+  return new Response(createFallbackPdf(title), {
+    headers: {
+      "Content-Type": "application/pdf",
+      "Content-Disposition": `inline; filename="${pdfId}.pdf"`,
+      "Cache-Control": "private, no-cache",
+    },
+  });
 }

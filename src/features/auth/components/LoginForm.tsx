@@ -132,7 +132,7 @@ export default function LoginForm() {
               </Link>
             </div>
 
-            <div className="rounded-[28px] border border-slate-200 bg-white/95 p-5 shadow-[0_24px_70px_rgba(30,74,140,0.11)] backdrop-blur sm:p-8">
+            <div className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-lg sm:p-8">
               <div className="text-center">
                 <div className="mx-auto flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-[#2D67DF] p-2 shadow-lg shadow-blue-200 ring-1 ring-blue-500/10 auth-logo-bob">
                   <Image

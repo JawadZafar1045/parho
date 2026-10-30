@@ -53,7 +53,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-[#F4F7FC] text-slate-900">
       <section className="mx-auto min-h-screen max-w-[1500px] px-4 pb-0 pt-4 sm:px-6 lg:px-12">
-        <nav className="sticky top-3 z-50 mx-auto flex w-full max-w-[1180px] flex-wrap items-center justify-between rounded-full border border-slate-200 bg-white/95 px-4 py-2.5 shadow-[0_8px_24px_rgba(30,74,140,0.08)] backdrop-blur sm:top-5 sm:px-6">
+        <nav className="sticky top-3 z-50 mx-auto flex w-full max-w-[1180px] flex-wrap items-center justify-between rounded-full border border-slate-200 bg-white px-4 py-2.5 shadow-[0_8px_24px_rgba(30,74,140,0.08)] sm:top-5 sm:px-6">
           <Link href="/" className="flex items-center gap-3">
             <span className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-[#2D67DF] p-1.5 shadow-md shadow-blue-200">
               <Image src="/images/parho-logo.svg" alt="Parho logo" width={40} height={40} className="h-full w-full object-contain" priority />
@@ -206,36 +206,291 @@ export default function HomePage() {
             Focused resources and practice material for the exams students prepare for most.
           </p>
 
-          <div className="mt-8 grid gap-3 text-left sm:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-[0_12px_30px_rgba(30,74,140,0.07)]">
-              <p className="text-xs font-extrabold text-[#2D67DF]">PPSC</p>
-              <h3 className="mt-2 font-extrabold text-slate-900">Punjab Public Service Commission</h3>
-              <p className="mt-2 text-xs leading-5 text-slate-500">Structured notes, quizzes, and revision support for PPSC tests.</p>
+          <div className="mt-10 grid gap-6 text-left sm:grid-cols-2 lg:grid-cols-3">
+            {/* PPSC Course Card */}
+            <div className="relative flex flex-col justify-between rounded-3xl border-2 border-[#2D67DF] bg-white p-6 shadow-xl shadow-blue-500/10 transition-transform duration-200 hover:-translate-y-1">
+              <span className="absolute -top-3 right-6 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-3 py-1 text-[10px] font-black uppercase text-white shadow-md shadow-amber-300">
+                🔥 50% OFF - Most Popular
+              </span>
+              <div>
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-xs font-black text-[#2D67DF]">
+                  PPSC
+                </span>
+                <h3 className="mt-4 text-xl font-black text-slate-950">
+                  Punjab Public Service Commission
+                </h3>
+                <p className="mt-2 text-xs leading-relaxed text-slate-500">
+                  Complete structured notes, solved past papers, and timed mock tests for PPSC examinations.
+                </p>
+
+                {/* Price Display */}
+                <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-100 p-4">
+                  <div className="flex items-baseline gap-2.5">
+                    <span className="text-2xl font-black text-slate-950">Rs. 1,500</span>
+                    <span className="text-xs font-bold text-slate-400 line-through">Rs. 3,000</span>
+                    <span className="rounded-md bg-emerald-600 px-2 py-0.5 text-[10px] font-bold text-white">
+                      Save Rs. 1,500
+                    </span>
+                  </div>
+                  <span className="block mt-1 text-[11px] font-bold text-slate-600">One-time fee · Complete package</span>
+                </div>
+
+                <ul className="mt-4 space-y-2 text-xs font-medium text-slate-600">
+                  <li className="flex items-center gap-2">
+                    <span className="text-emerald-500 font-bold">✓</span> 7 Compulsory &amp; General Subjects
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-emerald-500 font-bold">✓</span> 24+ Verified PDF Study Notes
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-emerald-500 font-bold">✓</span> Timed Exam Practice Simulator
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-emerald-500 font-bold">✓</span> Protected Anti-Piracy In-App Reader
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mt-6 pt-2">
+                <Link
+                  href="/signup"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#2D67DF] py-3 text-center text-xs font-bold text-white shadow-md shadow-blue-200 transition hover:bg-[#2054C4]"
+                >
+                  <span>Claim 50% Discount &amp; Join</span>
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
             </div>
-            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-[0_12px_30px_rgba(30,74,140,0.07)]">
-              <p className="text-xs font-extrabold text-[#2D67DF]">FPSC</p>
-              <h3 className="mt-2 font-extrabold text-slate-900">Federal Public Service Commission</h3>
-              <p className="mt-2 text-xs leading-5 text-slate-500">Build a consistent routine for federal competitive exams.</p>
+
+            {/* FPSC Course Card */}
+            <div className="relative flex flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-transform duration-200 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+              <span className="absolute -top-3 right-6 rounded-full bg-emerald-500 px-3 py-1 text-[10px] font-black uppercase text-white shadow-sm">
+                50% OFF - Federal Track
+              </span>
+              <div>
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-600 text-xs font-black text-white">
+                  FPSC
+                </span>
+                <h3 className="mt-4 text-xl font-black text-slate-950">
+                  Federal Public Service Commission
+                </h3>
+                <p className="mt-2 text-xs leading-relaxed text-slate-500">
+                  Study packages, General Knowledge, English grammar, and IT fundamentals for federal tests.
+                </p>
+
+                {/* Price Display */}
+                <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-100 p-4">
+                  <div className="flex items-baseline gap-2.5">
+                    <span className="text-2xl font-black text-slate-950">Rs. 1,500</span>
+                    <span className="text-xs font-bold text-slate-400 line-through">Rs. 3,000</span>
+                    <span className="rounded-md bg-emerald-600 px-2 py-0.5 text-[10px] font-bold text-white">
+                      Save 50%
+                    </span>
+                  </div>
+                  <span className="block mt-1 text-[11px] font-bold text-slate-600">One-time fee · Complete package</span>
+                </div>
+
+                <ul className="mt-4 space-y-2 text-xs font-medium text-slate-600">
+                  <li className="flex items-center gap-2">
+                    <span className="text-emerald-500 font-bold">✓</span> Federal Pattern General Knowledge
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-emerald-500 font-bold">✓</span> Computer Science &amp; IT Notes
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-emerald-500 font-bold">✓</span> Timed Practice Quizzes with Explanations
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mt-6 pt-2">
+                <Link
+                  href="/signup"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 py-3 text-center text-xs font-bold text-white transition hover:bg-slate-800"
+                >
+                  <span>Enroll in FPSC Track</span>
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
             </div>
-            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-[0_12px_30px_rgba(30,74,140,0.07)]">
-              <p className="text-xs font-extrabold text-[#2D67DF]">CSS</p>
-              <h3 className="mt-2 font-extrabold text-slate-900">Competitive Examination</h3>
-              <p className="mt-2 text-xs leading-5 text-slate-500">Plan your preparation with focused practice and progress tracking.</p>
+
+            {/* CSS Course Card */}
+            <div className="relative flex flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-transform duration-200 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+              <span className="absolute -top-3 right-6 rounded-full bg-purple-600 px-3 py-1 text-[10px] font-black uppercase text-white shadow-sm">
+                50% OFF - Comprehensive
+              </span>
+              <div>
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-purple-50 text-xs font-black text-purple-700">
+                  CSS
+                </span>
+                <h3 className="mt-4 text-xl font-black text-slate-950">
+                  CSS Compulsory Track
+                </h3>
+                <p className="mt-2 text-xs leading-relaxed text-slate-500">
+                  English Précis &amp; Composition, analytical outlines, and structured revision for aspirants.
+                </p>
+
+                {/* Price Display */}
+                <div className="mt-5 rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                  <div className="flex items-baseline gap-2.5">
+                    <span className="text-2xl font-black text-slate-950">Rs. 2,500</span>
+                    <span className="text-xs font-bold text-slate-400 line-through">Rs. 5,000</span>
+                    <span className="rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-black text-emerald-800">
+                      Save 50%
+                    </span>
+                  </div>
+                  <span className="block mt-1 text-[11px] font-semibold text-slate-500">One-time fee · Complete package</span>
+                </div>
+
+                <ul className="mt-4 space-y-2 text-xs font-medium text-slate-600">
+                  <li className="flex items-center gap-2">
+                    <span className="text-emerald-500 font-bold">✓</span> English Précis &amp; High-Yield Vocabulary
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-emerald-500 font-bold">✓</span> Pakistan &amp; Global Affairs Outlines
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-emerald-500 font-bold">✓</span> Regular Mock Question Sets
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mt-6 pt-2">
+                <Link
+                  href="/signup"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 py-3 text-center text-xs font-bold text-white transition hover:bg-slate-800"
+                >
+                  <span>Enroll in CSS Track</span>
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
             </div>
-            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-[0_12px_30px_rgba(30,74,140,0.07)]">
-              <p className="text-xs font-extrabold text-[#2D67DF]">NTS</p>
-              <h3 className="mt-2 font-extrabold text-slate-900">National Testing Service</h3>
-              <p className="mt-2 text-xs leading-5 text-slate-500">Practice question sets and improve your test readiness.</p>
+
+            {/* NTS Course Card */}
+            <div className="relative flex flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-transform duration-200 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+              <span className="absolute -top-3 right-6 rounded-full bg-amber-500 px-3 py-1 text-[10px] font-black uppercase text-white shadow-sm">
+                50% OFF - Educators Track
+              </span>
+              <div>
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-xs font-black text-amber-700">
+                  NTS
+                </span>
+                <h3 className="mt-4 text-xl font-black text-slate-950">
+                  National Testing Service (NTS)
+                </h3>
+                <p className="mt-2 text-xs leading-relaxed text-slate-500">
+                  Verbal, Analytical &amp; Quantitative reasoning question banks and notes for Educator jobs.
+                </p>
+
+                {/* Price Display */}
+                <div className="mt-5 rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                  <div className="flex items-baseline gap-2.5">
+                    <span className="text-2xl font-black text-slate-950">Rs. 1,200</span>
+                    <span className="text-xs font-bold text-slate-400 line-through">Rs. 2,400</span>
+                    <span className="rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-black text-emerald-800">
+                      Save 50%
+                    </span>
+                  </div>
+                  <span className="block mt-1 text-[11px] font-semibold text-slate-500">One-time fee · Complete package</span>
+                </div>
+
+                <ul className="mt-4 space-y-2 text-xs font-medium text-slate-600">
+                  <li className="flex items-center gap-2">
+                    <span className="text-emerald-500 font-bold">✓</span> Analytical Reasoning Step-by-Step
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-emerald-500 font-bold">✓</span> Quantitative Shortcuts &amp; Formulas
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-emerald-500 font-bold">✓</span> Full Timed Test Series
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mt-6 pt-2">
+                <Link
+                  href="/signup"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 py-3 text-center text-xs font-bold text-white transition hover:bg-slate-800"
+                >
+                  <span>Enroll in NTS Track</span>
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
             </div>
-            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-[0_12px_30px_rgba(30,74,140,0.07)]">
-              <p className="text-xs font-extrabold text-[#2D67DF]">PMS</p>
-              <h3 className="mt-2 font-extrabold text-slate-900">Provincial Management Service</h3>
-              <p className="mt-2 text-xs leading-5 text-slate-500">Keep your provincial exam preparation clear and measurable.</p>
+
+            {/* PMS Course Card */}
+            <div className="relative flex flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-transform duration-200 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+              <span className="absolute -top-3 right-6 rounded-full bg-teal-600 px-3 py-1 text-[10px] font-black uppercase text-white shadow-sm">
+                50% OFF - Provincial
+              </span>
+              <div>
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-teal-50 text-xs font-black text-teal-700">
+                  PMS
+                </span>
+                <h3 className="mt-4 text-xl font-black text-slate-950">
+                  Provincial Management Service
+                </h3>
+                <p className="mt-2 text-xs leading-relaxed text-slate-500">
+                  Keep your provincial competitive exam preparation clear, structured, and measurable.
+                </p>
+
+                {/* Price Display */}
+                <div className="mt-5 rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                  <div className="flex items-baseline gap-2.5">
+                    <span className="text-2xl font-black text-slate-950">Rs. 2,000</span>
+                    <span className="text-xs font-bold text-slate-400 line-through">Rs. 4,000</span>
+                    <span className="rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-black text-emerald-800">
+                      Save 50%
+                    </span>
+                  </div>
+                  <span className="block mt-1 text-[11px] font-semibold text-slate-500">One-time fee · Complete package</span>
+                </div>
+
+                <ul className="mt-4 space-y-2 text-xs font-medium text-slate-600">
+                  <li className="flex items-center gap-2">
+                    <span className="text-emerald-500 font-bold">✓</span> Full General Knowledge Question Bank
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-emerald-500 font-bold">✓</span> Pakistan Affairs Outlines
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-emerald-500 font-bold">✓</span> Essay Writing Frameworks
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mt-6 pt-2">
+                <Link
+                  href="/signup"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 py-3 text-center text-xs font-bold text-white transition hover:bg-slate-800"
+                >
+                  <span>Enroll in PMS Track</span>
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
             </div>
-            <div className="rounded-xl border border-blue-100 bg-blue-50 p-5">
-              <p className="text-xs font-extrabold text-[#2D67DF]">More coming</p>
-              <h3 className="mt-2 font-extrabold text-slate-900">Your next goal</h3>
-              <p className="mt-2 text-xs leading-5 text-slate-500">New preparation tracks will be added as Parho grows.</p>
+
+            {/* Custom Track Card */}
+            <div className="flex flex-col justify-between rounded-3xl border border-dashed border-blue-300 bg-gradient-to-b from-blue-50/50 to-white p-6 text-center">
+              <div>
+                <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 text-xl font-bold text-[#2D67DF]">
+                  +
+                </span>
+                <h3 className="mt-4 text-xl font-black text-slate-950">Need a Custom Track?</h3>
+                <p className="mt-2 text-xs leading-relaxed text-slate-500">
+                  Preparing for Banking, FIA, MOD, or Police tests? We are adding customized packages regularly.
+                </p>
+              </div>
+
+              <div className="mt-8">
+                <button
+                  type="button"
+                  onClick={openContact}
+                  className="w-full rounded-xl border border-blue-300 bg-white py-3 text-xs font-bold text-[#2D67DF] transition hover:bg-blue-50"
+                >
+                  Request a Specific Test Track
+                </button>
+              </div>
             </div>
           </div>
         </section>
@@ -336,7 +591,7 @@ export default function HomePage() {
       </section>
 
       {contactOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 px-4 py-6 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 px-4 py-6" role="dialog" aria-modal="true" aria-labelledby="contact-title">
           <div className="max-h-[92vh] w-full max-w-[570px] overflow-y-auto rounded-[28px] bg-white shadow-2xl">
             <div className="flex items-start justify-between bg-[#2D67DF] px-6 py-6 text-white sm:px-8">
               <div>

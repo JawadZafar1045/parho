@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
       throw new UnauthorizedError("Invalid email or password.");
     }
 
-    const sessionToken = createSession(user.email);
+    const sessionToken = createSession(user.email, user.role);
     const response = NextResponse.json(
       apiSuccess({
         message: "Login successful.",

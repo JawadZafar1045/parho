@@ -315,7 +315,7 @@ export default function SignupForm() {
           <div className="relative z-10 flex h-full flex-col justify-between px-9 py-9 xl:px-12 xl:py-12">
             <div>
               <div className="flex items-center gap-3">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/12 p-2 shadow-lg ring-1 ring-white/20 backdrop-blur">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-700 p-2 shadow-lg border border-blue-500">
                   <Image
                     src="/images/parho-logo.svg"
                     alt="Parho logo"
@@ -332,14 +332,14 @@ export default function SignupForm() {
               </div>
 
               <div className="mt-14 max-w-xl animate-fade-up">
-                <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-blue-50 ring-1 ring-white/15">
+                <span className="inline-flex items-center gap-2 rounded-md bg-blue-800 border border-blue-600 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white">
                   <SparkIcon />
                   Prepare with purpose
                 </span>
                 <h1 className="mt-5 text-4xl font-extrabold leading-[1.06] xl:text-5xl">
                   Your preparation starts here.
                 </h1>
-                <p className="mt-5 max-w-lg text-sm leading-7 text-blue-50/90 xl:text-base">
+                <p className="mt-5 max-w-lg text-sm leading-7 text-blue-100 xl:text-base">
                   Create your Parho account and get access to structured notes, quizzes and focused
                   preparation resources for competitive tests.
                 </p>
@@ -353,15 +353,15 @@ export default function SignupForm() {
                 ].map(([title, description], index) => (
                   <div
                     key={title}
-                    className="animate-fade-up flex items-start gap-3 rounded-2xl border border-white/15 bg-white/8 p-4 backdrop-blur-sm"
+                    className="animate-fade-up flex items-start gap-3 rounded-2xl border border-blue-700 bg-blue-900 p-4"
                     style={{ animationDelay: `${220 + index * 90}ms` }}
                   >
-                    <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/12 text-blue-50">
+                    <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-700 text-white">
                       <CheckIcon />
                     </span>
                     <div>
-                      <p className="text-sm font-bold">{title}</p>
-                      <p className="mt-1 text-xs leading-5 text-blue-100/85">{description}</p>
+                      <p className="text-sm font-bold text-white">{title}</p>
+                      <p className="mt-1 text-xs leading-5 text-blue-200">{description}</p>
                     </div>
                   </div>
                 ))}
@@ -375,7 +375,7 @@ export default function SignupForm() {
         </aside>
 
         <section className="flex min-h-[100svh] items-start justify-center p-4 sm:p-6 lg:items-center lg:p-10 xl:p-12">
-          <div className="w-full max-w-3xl animate-fade-up rounded-[28px] border border-slate-200 bg-white/95 p-5 shadow-[0_24px_70px_rgba(30,74,140,0.11)] backdrop-blur sm:p-8 xl:p-10">
+          <div className="w-full max-w-3xl animate-fade-up rounded-[28px] border border-slate-200 bg-white p-5 shadow-lg sm:p-8 xl:p-10">
             <div className="mb-7 flex items-center gap-3 lg:hidden">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#2D67DF] p-2 shadow-md shadow-blue-200">
                 <Image
@@ -408,7 +408,7 @@ export default function SignupForm() {
 
             {showPaymentGuide && (
               <div
-                className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/45 p-4 backdrop-blur-sm"
+                className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4"
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="payment-guide-title"
@@ -493,7 +493,7 @@ export default function SignupForm() {
 
             {success && (
               <div
-                className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 p-4 backdrop-blur-sm"
+                className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4"
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="signup-success-title"

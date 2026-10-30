@@ -18,7 +18,10 @@ export async function connectToDatabase(): Promise<typeof mongoose> {
     const { MONGODB_URI } = getEnv();
 
     globalWithMongoose.mongooseConnection = mongoose
-      .connect(MONGODB_URI)
+      .connect(MONGODB_URI, {
+        serverSelectionTimeoutMS: 2000,
+        connectTimeoutMS: 2000,
+      })
       .catch((error) => {
         globalWithMongoose.mongooseConnection = undefined;
         throw error;

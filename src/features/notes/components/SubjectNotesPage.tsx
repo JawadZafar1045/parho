@@ -82,18 +82,17 @@ export function SubjectNotesPage({ courseId, subjectId }: SubjectNotesPageProps)
                         </div>
                       </div>
                       <div className="flex shrink-0 gap-2 pl-[52px] sm:pl-0">
-                        <a
-                          href={url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex min-h-10 items-center justify-center rounded-lg border border-[#BED7F7] px-4 text-sm font-bold text-[#1678E6] hover:bg-[#F0F6FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                        <Link
+                          href={`/student/notes/view/${courseId}/${subjectId}/${pdf.id}`}
+                          className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-lg border border-[#BED7F7] bg-white px-4 text-sm font-bold text-[#1678E6] transition hover:bg-[#F0F6FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 shadow-sm"
                         >
-                          Read
-                        </a>
+                          <span>📖</span>
+                          Read Online
+                        </Link>
                         <a
                           href={url}
                           download={pdf.title}
-                          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg bg-[#287BF0] px-4 text-sm font-bold text-white hover:bg-[#1769D9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg bg-[#287BF0] px-4 text-sm font-bold text-white transition hover:bg-[#1769D9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 shadow-sm"
                         >
                           <DownloadIcon className="h-4 w-4" />
                           Download

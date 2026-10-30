@@ -1,5 +1,10 @@
-import { redirect } from "next/navigation";
+import { QuizzesListPage } from "@/features/quizzes/components/QuizzesListPage";
 
-export default function QuizzesAliasPage() {
-  redirect("/student/courses");
+type QuizzesRouteProps = {
+  searchParams: Promise<{ course?: string }>;
+};
+
+export default async function QuizzesPage({ searchParams }: QuizzesRouteProps) {
+  const { course } = await searchParams;
+  return <QuizzesListPage initialCourseId={course} />;
 }

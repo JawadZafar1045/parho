@@ -48,7 +48,7 @@ export default function AuthBrandPanel({ mode }: AuthBrandPanelProps) {
             className="group inline-flex items-center gap-3 outline-none"
             aria-label="Parho home"
           >
-            <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-white/12 p-2 shadow-lg ring-1 ring-white/20 backdrop-blur transition duration-300 group-hover:-translate-y-0.5 group-hover:bg-white/16">
+            <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-blue-700 p-2 shadow-lg border border-blue-500 transition duration-300 group-hover:-translate-y-0.5">
               <Image
                 src="/images/parho-logo.svg"
                 alt="Parho logo"
@@ -65,14 +65,14 @@ export default function AuthBrandPanel({ mode }: AuthBrandPanelProps) {
           </Link>
 
           <div className="mt-14 max-w-xl animate-fade-up">
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-blue-50 ring-1 ring-white/15">
+            <span className="inline-flex items-center gap-2 rounded-md bg-blue-800 border border-blue-600 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white">
               <SparkIcon className="h-4 w-4" />
               {content.eyebrow}
             </span>
             <h1 className="mt-5 max-w-lg text-4xl font-extrabold leading-[1.04] tracking-[-0.035em] xl:text-5xl">
               {content.title}
             </h1>
-            <p className="mt-5 max-w-lg text-sm leading-7 text-blue-50/90 xl:text-base">
+            <p className="mt-5 max-w-lg text-sm leading-7 text-blue-100 xl:text-base">
               {content.description}
             </p>
           </div>
@@ -81,15 +81,15 @@ export default function AuthBrandPanel({ mode }: AuthBrandPanelProps) {
             {content.cards.map(([title, description], index) => (
               <div
                 key={title}
-                className="animate-fade-up flex items-start gap-3 rounded-2xl border border-white/15 bg-white/8 p-4 backdrop-blur-sm"
+                className="animate-fade-up flex items-start gap-3 rounded-2xl border border-blue-700 bg-blue-900 p-4"
                 style={{ animationDelay: `${180 + index * 90}ms` }}
               >
-                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/12 text-blue-50">
+                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-700 text-white">
                   <CheckIcon className="h-4 w-4" />
                 </span>
                 <div>
-                  <p className="text-sm font-bold">{title}</p>
-                  <p className="mt-1 text-xs leading-5 text-blue-100/85">{description}</p>
+                  <p className="text-sm font-bold text-white">{title}</p>
+                  <p className="mt-1 text-xs leading-5 text-blue-200">{description}</p>
                 </div>
               </div>
             ))}
